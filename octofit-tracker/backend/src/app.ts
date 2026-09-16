@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import { rateLimit } from 'express-rate-limit';
 import { Activity, LeaderboardEntry, Team, User, Workout } from './models/index.js';
 
 const app = express();
@@ -8,6 +9,15 @@ const baseUrl = codespaceName ? `https://${codespaceName}-8000.app.github.dev` :
 
 app.use(cors());
 app.use(express.json());
+app.use(
+  '/api',
+  rateLimit({
+    windowMs: 15 * 60 * 1000,
+    limit: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+  }),
+);
 
 app.get('/', (_request, response) => {
   response.json({
