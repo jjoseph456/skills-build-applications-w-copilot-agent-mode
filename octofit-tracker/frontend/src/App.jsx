@@ -41,7 +41,7 @@ function useOctofitData() {
   const [data, setData] = useState(fallbackData)
   const [status, setStatus] = useState('Loading live OctoFit data...')
 
-  const apiBaseUrl = useMemo(getApiBaseUrl, [])
+  const apiBaseUrl = useMemo(() => getApiBaseUrl(), [])
 
   useEffect(() => {
     const endpoints = ['users', 'activities', 'teams', 'leaderboard', 'workouts']
